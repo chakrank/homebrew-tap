@@ -11,7 +11,7 @@ class Barestats < Formula
 
   on_macos do
     url "https://github.com/chakrank/BareStats/releases/download/v#{version}/barestats-#{version}-macOS.tar.gz"
-    sha256 "0000000000000000000000000000000000000000000000000000000000000000" # Updated automatically on release
+    sha256 "14f97fbd97fd9e8e0b378610b894d6f092d1597f6c46410539d36b8a0c6559e5"
 
     def install
       if File.directory?("BareStats.app")
@@ -24,7 +24,7 @@ class Barestats < Formula
 
   on_linux do
     url "https://github.com/chakrank/BareStats/releases/download/v#{version}/barestats-#{version}-linux-x86_64.tar.gz"
-    sha256 "0000000000000000000000000000000000000000000000000000000000000000" # Updated automatically on release
+    sha256 "3dc4e806f928b272fccad32a71540dad2f803a43b0d849b8d6d84bca992579dd"
 
     def install
       bin.install "barestats"

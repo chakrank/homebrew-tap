@@ -1,6 +1,6 @@
 cask "barestats" do
   version "1.4.0"
-  sha256 "0000000000000000000000000000000000000000000000000000000000000000" # Updated automatically on release
+  sha256 "219acb53f066f8705662ba2c7512acdb73f70c453a9b30d76f44997fc3c2aeb4"
 
   url "https://github.com/chakrank/BareStats/releases/download/v#{version}/barestats-#{version}-macOS.dmg"
   name "BareStats"

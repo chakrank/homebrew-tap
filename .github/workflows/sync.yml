@@ -1,0 +1,48 @@
+name: Sync Release from BareStats
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'BareStats release version to sync (e.g. 1.4.0). Leave empty to query latest release.'
+        required: false
+        default: ''
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  sync-release:
+    name: Sync Formula and Cask
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Homebrew Tap Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git Author Identity
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Synchronize Release from BareStats Upstream
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          chmod +x scripts/sync_release_from_github.sh
+          ./scripts/sync_release_from_github.sh "${{ inputs.version }}"
+
+      - name: Commit and Push Release Updates
+        run: |
+          if git diff --quiet; then
+            echo "Homebrew tap is already up to date. Nothing to commit."
+          else
+            git add Formula/barestats.rb Casks/barestats.rb
+            git commit -m "sync: update barestats release definitions"
+            git push origin main
+            echo "Successfully synced and pushed Homebrew tap updates."
+          fi
